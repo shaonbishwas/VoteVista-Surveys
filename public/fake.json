@@ -1,0 +1,120 @@
+[
+  {
+    "title": "Food Survey",
+    "category": "Food",
+    "description": "What is your favorite type of cuisine?",
+    "banner": "https://i.ibb.co/K0GHQ6L/960x0.webp",
+    "publishDate": "2023-11-26",
+    "deadlineDate": "2023-12-10",
+    "questionText": "Choose your favorite cuisine:",
+    "options": ["Italian", "Mexican", "Chinese", "Indian", "American"],
+    "like": 0,
+    "dislike": 0,
+    "vote": 0
+  },
+  {
+    "title": "Technology Survey",
+    "category": "Technology",
+    "description": "Which operating system do you use?",
+    "banner": "https://i.ibb.co/q5pgY9w/technology-customer-support1.jpg",
+    "publishDate": "2023-11-27",
+    "deadlineDate": "2023-12-15",
+
+    "questionText": "Select your operating system:",
+    "options": ["Windows", "MacOS", "Linux", "Other"],
+
+    "like": 0,
+    "dislike": 0,
+    "vote": 0
+  },
+  {
+    "title": "Travel Survey",
+    "category": "Travel",
+    "description": "What is your preferred mode of transportation for long trips?",
+    "banner": "https://i.ibb.co/9tggy2k/travel.jpg",
+    "publishDate": "2023-11-28",
+    "deadlineDate": "2023-12-20",
+
+    "questionText": "Choose your preferred mode of transportation:",
+    "options": ["Car", "Plane", "Train", "Bus"],
+
+    "like": 0,
+    "dislike": 0,
+    "vote": 0
+  },
+  {
+    "title": "Movie Preferences Survey",
+    "category": "Entertainment",
+    "description": "What is your favorite movie genre?",
+    "banner": "https://i.ibb.co/25LLWmZ/ai-in-entertainment.jpg",
+    "publishDate": "2023-11-29",
+    "deadlineDate": "2023-12-25",
+
+    "questionText": "Select your favorite movie genre:",
+    "options": ["Action", "Comedy", "Drama", "Science Fiction", "Horror"],
+
+    "like": 0,
+    "dislike": 0,
+    "vote": 0
+  },
+  {
+    "title": "Fitness Habits Survey",
+    "category": "Health",
+    "description": "How often do you exercise per week?",
+    "banner": "https://i.ibb.co/r29WFPt/health-topics-2.jpg",
+    "publishDate": "2023-11-30",
+    "deadlineDate": "2023-12-31",
+
+    "questionText": "Choose your exercise frequency:",
+    "options": ["Never", "1-2 times", "3-4 times", "5 or more times"],
+
+    "like": 0,
+    "dislike": 0,
+    "vote": 0
+  },
+  {
+    "title": "Music Preferences Survey",
+    "category": "Entertainment",
+    "description": "What is your favorite music genre?",
+    "banner": "https://i.ibb.co/Xkf5HNs/og-industry-media-entertainment.png",
+    "publishDate": "2023-12-01",
+    "deadlineDate": "2024-01-05",
+
+    "questionText": "Select your favorite music genre:",
+    "options": ["Pop", "Rock", "Hip Hop", "Country", "Electronic"],
+
+    "like": 0,
+    "dislike": 0,
+    "vote": 0
+  },
+  {
+    "title": "Gaming Habits Survey",
+    "category": "Gaming",
+    "description": "What is your favorite gaming platform?",
+    "banner": "https://i.ibb.co/yqxqcnW/gaming.png",
+    "publishDate": "2023-12-02",
+    "deadlineDate": "2024-01-10",
+
+    "questionText": "Choose your favorite gaming platform:",
+    "options": ["PC", "PlayStation", "Xbox", "Nintendo", "Mobile"],
+
+    "like": 0,
+    "dislike": 0,
+    "vote": 0
+  },
+  {
+    "title": "Reading Habits Survey",
+    "category": "Hobbies",
+    "description": "Do you prefer e-books or physical books?",
+    "banner": "https://i.ibb.co/PCJJ1ym/Show-Image.jpg",
+    "publishDate": "2023-12-03",
+    "deadlineDate": "2024-01-15",
+
+    "questionText": "Select your preference:",
+    "options": ["E-books", "Physical books", "Both"],
+
+    "like": 0,
+    "dislike": 0,
+    "vote": 0
+  }
+]

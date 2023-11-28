@@ -1,0 +1,22 @@
+.upcoming{
+    background-image: linear-gradient(to right, rgb(221, 15, 50),rgb(191, 1, 106));
+}
+
+#h1{
+    color: transparent;
+    -webkit-text-stroke: 3px #ff5100;
+}
+#submit{
+    background-image: linear-gradient(to right, #ff5100,rgb(234, 166, 166));
+}
+.textarea{
+    background-color: #ff51001c;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+}
+.textarea:focus{
+    border: none;
+}
+.button{
+    background-image: linear-gradient(to right, rgb(221, 15, 15),rgb(191, 1, 106));
+}
