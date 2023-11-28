@@ -27,7 +27,7 @@ const Surveys = () => {
       return result.data;
     },
   });
-const filteButton = ()=>{
+const filterButton = ()=>{
   refetch()
 }
   return (
@@ -88,7 +88,7 @@ const filteButton = ()=>{
             <option value="asc">Less voted</option>
           </select>
         </div>
-        <button className="border-2 border-black rounded-full py-1 px-2 hover:shadow-lg" onClick={filteButton}>Apply Filter</button>
+        <button className="border-2 border-black rounded-full py-1 px-2 hover:shadow-lg" onClick={filterButton}>Apply Filter</button>
       </div>
       <div className="grid grid-cols-3 gap-5">
         {data?.map((item) => (

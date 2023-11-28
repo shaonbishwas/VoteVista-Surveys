@@ -6,9 +6,14 @@ import { BiDislike } from "react-icons/bi";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import { useState } from "react";
 const SurveyDetails = () => {
+  
+  const axiosPublic = useAxiosPublic()
   const { user } = useAuth();
   const item = useLoaderData();
+  const [selected, setSelected] = useState(item?.options[0])
   const { data: comments = [], refetch: commentRefetch } = useQuery({
     queryKey: ["comments"],
     queryFn: async () => {
@@ -28,6 +33,26 @@ const SurveyDetails = () => {
       return result.data;
     },
   });
+  const { data:totalLikes, refetch:likeRefetch } = useQuery({
+    queryKey: ["alllikes"],
+    queryFn: async () => {
+      const result = await axiosPublic.get(
+        `/likes/${item._id}`
+      );
+      return result.data;
+    },
+  });
+  console.log(totalLikes)
+  const { data:totalDislike, refetch:dislikeRefetch } = useQuery({
+    queryKey: ["alldislike"],
+    queryFn: async () => {
+      const result = await axiosPublic.get(
+        `/dislikes/${item._id}`
+      );
+      return result.data;
+    },
+  });
+  console.log(totalDislike, 'dislike')
   //   console.log(feedbacks[0]?.feedback,'feedback')
   const handleSubmitFeedback = (e) => {
     e.preventDefault();
@@ -72,34 +97,60 @@ const SurveyDetails = () => {
     // console.log(user)
   };
 
-  const handleVote=()=>{
-    console.log('bote')
+  const handleVote = () => {
+    console.log("vote");
     const body = {
-      email:user.email,
-      vote:1
-    }
-    axios.post(`http://localhost:5000/vld/${item._id}`,body).then(() => {
+      email: user.email,
+      surveyId:item._id,
+      vote: selected,
+    };
+    axios.post(`http://localhost:5000/vote/${item._id}`, body).then((res) => {
       // e.target.comment.value = "";
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "your comment Successfully submitted",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      commentRefetch();
+      console.log(res?.data?.isVoted)
+      if(!res?.data?.isVoted){
+        // setIsvoted(res.data.isVoted)
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "your Vote Successfully submitted",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      // commentRefetch();
     });
-  }
-//   const handleReport = (e)=>{
-//     e.preventDefault()
-//     // Swal.fire({
-//     //     title: "Success",
-//     //     text: "Successfully Reported",
-//     //     icon: "success",
-//     //     showConfirmButton: false,
-//     //     timer: 1000,
-//     //   });
-//   }
+  };
+  const handleLike = () => {
+    // console.log("like");
+    const body = {
+      email: user.email,
+      surveyId:item._id,
+      like: 1,
+    };
+    axios.post(`http://localhost:5000/like/${item._id}`, body).then((result) => {
+      // commentRefetch();
+      if(!result?.data?.isLiked){
+        likeRefetch()
+      }
+
+    });
+  };
+  const handleDislike = () => {
+    console.log("dislike");
+    const body = {
+      email: user.email,
+      surveyId:item._id,
+      dislike: 1,
+    };
+    axios.post(`http://localhost:5000/dislike/${item._id}`, body).then((result) => {
+      // commentRefetch();
+      if(!result?.data?.isDislike){
+        dislikeRefetch()
+      }
+
+    });
+  };
+  
   return (
     <>
       <div className="my-20 flex gap-10 max-w-[1400px] mx-auto">
@@ -112,25 +163,26 @@ const SurveyDetails = () => {
           <h2 className="text-3xl font-semibold text-gray-700">
             {item?.questionText}
           </h2>
-          {/* <div>
-        {item?.question?.options?.map((value, idx) => (
-          <Option key={idx}></Option>
-        ))}
-        </div> */}
-          <Option options={item?.options}></Option>
+          <Option options={item?.options} selected={selected} setSelected={setSelected}></Option>
           <div className="flex">
-            <button className="rounded-s-3xl border-2 p-2 flex gap-2">
-              <AiOutlineLike className="text-2xl" />0
+            <button className="rounded-s-3xl border-2 p-2 flex gap-2" onClick={handleLike}>
+              <AiOutlineLike className="text-2xl" />{totalLikes?.result}
             </button>
-            <button className="rounded-e-3xl border-l-0 border-2 p-2">
-              <BiDislike className="text-2xl" />
+            <button className="rounded-e-3xl border-l-0 border-2 p-2 flex gap-2">
+              <BiDislike className="text-2xl" onClick={handleDislike} />{totalDislike?.result}
             </button>
           </div>
           <div className="flex gap-10 mt-5">
-            <button onClick={handleVote} className="bg-sky-800 text-white py-2 px-8 rounded-3xl hover:shadow-xl hover:border-sky-800 border hover:bg-white hover:text-black">
+            <button type="btn"
+              onClick={handleVote}
+              className={`bg-sky-800 text-white py-2 px-8 rounded-3xl hover:shadow-xl hover:border-sky-800 border hover:bg-white hover:text-black`}
+            >
               Vote
             </button>
-            <button className="hover:bg-red-800 border border-red-800 hover:text-white py-2 px-8 rounded-3xl" onClick={() => document.getElementById("my_modal_1").showModal()}>
+            <button
+              className="hover:bg-red-800 border border-red-800 hover:text-white py-2 px-8 rounded-3xl"
+              onClick={() => document.getElementById("my_modal_1").showModal()}
+            >
               Report
             </button>
           </div>
@@ -218,13 +270,11 @@ const SurveyDetails = () => {
             <option value="">Lack of Informed Consent</option>
             <option value="">Privacy Concerns</option>
           </select>
-          <p className="py-4">
-            Press ESC key to ignore
-          </p>
+          <p className="py-4">Press ESC key to ignore</p>
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button className="btn" >Report Submit</button>
+              <button className="btn">Report Submit</button>
             </form>
           </div>
         </div>

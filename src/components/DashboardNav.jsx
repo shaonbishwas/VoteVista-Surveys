@@ -23,6 +23,30 @@ const DashboardNav = () => {
             ? "active lg:mt-2 bg-black rounded-full p-1 px-3 text-[#ffffff] font-extraboldbold text-lg"
             : "lg:mt-2 text-lg hover:bg-black hover:text-white rounded-full p-1 px-3 duration-500"
         }
+        to="/dashboard/mysurveys"
+      >
+        My Surveys
+      </NavLink>
+      <NavLink
+        className={({ isActive, isPending }) =>
+          isPending
+            ? "pending"
+            : isActive
+            ? "active lg:mt-2 bg-black rounded-full p-1 px-3 text-[#ffffff] font-extraboldbold text-lg"
+            : "lg:mt-2 text-lg hover:bg-black hover:text-white rounded-full p-1 px-3 duration-500"
+        }
+        to="/dashboard/surveyresponse"
+      >
+        Survey Response
+      </NavLink>
+      <NavLink
+        className={({ isActive, isPending }) =>
+          isPending
+            ? "pending"
+            : isActive
+            ? "active lg:mt-2 bg-black rounded-full p-1 px-3 text-[#ffffff] font-extraboldbold text-lg"
+            : "lg:mt-2 text-lg hover:bg-black hover:text-white rounded-full p-1 px-3 duration-500"
+        }
         to="/dashboard/addsurvey"
       >
         add survey

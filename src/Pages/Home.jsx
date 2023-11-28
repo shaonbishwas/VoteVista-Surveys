@@ -7,7 +7,7 @@ const Home = () => {
   const { data } = useQuery({
     queryKey: ["featured surveys"],
     queryFn: async () => {
-      const result = await axios.get("http://localhost:5000/surveys");
+      const result = await axios.get("https://vote-viste-server-side.vercel.app/surveys");
       return result.data;
     },
   });

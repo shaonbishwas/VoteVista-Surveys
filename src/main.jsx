@@ -17,6 +17,9 @@ import AddSurvey from "./Pages/AddSurvey.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Surveys from "./Pages/Surveys.jsx";
 import SurveyDetails from "./Pages/SurveyDetails.jsx";
+import SurveysResponse from "./Pages/SurveysResponse.jsx";
+import ShowResponse from "./Pages/ShowResponse.jsx";
+import MySurveys from "./Pages/MySurveys.jsx";
 
 const router = createBrowserRouter([
   {
@@ -54,42 +57,7 @@ const router = createBrowserRouter([
         element: <SurveyDetails></SurveyDetails>,
         loader: ({params})=> fetch(`http://localhost:5000/surveys/${params.id}`)
         // errorElement: <ErrorElement></ErrorElement>,
-      },
-      // {
-      //   path: "addjob",
-      //   element: (
-      //     <PrivateRoute>
-      //       <AddJob></AddJob>
-      //     </PrivateRoute>
-      //   ),
-      //   errorElement: <ErrorElement></ErrorElement>,
-      // },
-      // {
-      //   path: "jobdetails/:id",
-      //   element: (
-      //     <PrivateRoute>
-      //       <JobDetails></JobDetails>
-      //     </PrivateRoute>
-      //   ),
-      //   errorElement: <ErrorElement></ErrorElement>,
-      //   loader: ({ params }) =>
-      //     fetch(
-      //       `https://online-marketplace-zeta.vercel.app/api/v1/jobs/${params.id}`
-      //     ),
-      // },
-      // {
-      //   path: "updatejob/:id",
-      //   element: (
-      //     <PrivateRoute>
-      //       <UpdatePage></UpdatePage>
-      //     </PrivateRoute>
-      //   ),
-      //   errorElement: <ErrorElement></ErrorElement>,
-      //   loader: ({ params }) =>
-      //     fetch(
-      //       `https://online-marketplace-zeta.vercel.app/api/v1/jobs/${params.id}`
-      //     ),
-      // },
+      }
     ],
   },
   {
@@ -119,6 +87,19 @@ const router = createBrowserRouter([
         path: "pendingsurveys",
         element: <PendingSurveys></PendingSurveys>,
       },
+      {
+        path: "surveyresponse",
+        element: <SurveysResponse></SurveysResponse>,
+      },
+      {
+        path: "mysurveys",
+        element: <MySurveys></MySurveys>,
+      },
+      {
+        path: "showresponse/:id",
+        element: <ShowResponse></ShowResponse>,
+        loader:({params})=> fetch(`http://localhost:5000/surveys/${params.id}`)
+      }
     ],
   },
 ]);
