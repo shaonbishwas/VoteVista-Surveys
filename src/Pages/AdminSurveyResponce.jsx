@@ -1,25 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
-import useLoadUser from "../hooks/useLoadUser";
 
-const SurveysResponse = () => {
-  const axiosPublic = useAxiosPublic();
-  const user = useLoadUser()
-  const { data = [], isLoading } = useQuery({
-    queryKey: ["surveysresponse"],
+
+const AdminSurveyResponce = () => {
+    const axiosPublic = useAxiosPublic();
+  const { data = [] } = useQuery({
+    queryKey: ["AdminSurveyResponce"],
     queryFn: async () => {
-      const result = await axiosPublic.get(`/surveys?email=${user.email}`);
+      const result = await axiosPublic.get('/surveys');
       return result.data;
     },
   });
-  console.log(data, isLoading)
-  return (<>
-    {data.length == 0 ? <div className="flex flex-col items-center justify-center h-screen">
-        <span className="loading loading-bars loading-lg"></span>
-        <h1>Wait Please Surver is Litle Bit Slow</h1>
-      </div> :
-    <div>
+    return (
+        <div>
       <div className="overflow-x-auto">
         <table className="table table-xs table-pin-rows table-pin-cols">
           <thead>
@@ -51,9 +45,8 @@ const SurveysResponse = () => {
           </tbody>
         </table>
       </div>
-    </div>}
-  </>
-  );
+    </div>
+    );
 };
 
-export default SurveysResponse;
+export default AdminSurveyResponce;

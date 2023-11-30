@@ -1,8 +1,10 @@
 import Swal from "sweetalert2";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAuth from "../hooks/useAuth";
 // import axios from 'axios'
 
 const AddSurvey = () => {
+  const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,12 +21,13 @@ const AddSurvey = () => {
       options,
       question,
       deadlineDate,
+      owner: user?.email,
       banner: "https://i.ibb.co/tqt9sJ6/img-placeholder.webp",
       like: 0,
       dislike: 0,
       vote: 0,
     };
-    console.log(surveyInfo)
+    console.log(surveyInfo);
     axiosPublic.post("/pendingsurveys", surveyInfo).then(() => {
       Swal.fire({
         position: "top-end",
@@ -88,7 +91,7 @@ const AddSurvey = () => {
           </label>
           <textarea
             type="text"
-            placeholder="Write Options by giving space like :  option1 option2 option3 ..."
+            placeholder="Write Options by giving Space like :  option1 option2 option3  ..."
             name="options"
             className="input input-bordered"
             required

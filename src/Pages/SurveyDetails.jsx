@@ -51,6 +51,7 @@ const SurveyDetails = () => {
   });
   console.log(totalDislike, "dislike");
   //   console.log(feedbacks[0]?.feedback,'feedback')
+
   const handleSubmitFeedback = (e) => {
     e.preventDefault();
     const feedback = e.target.feedback.value;
@@ -58,6 +59,7 @@ const SurveyDetails = () => {
       email: user.email,
       surveyId: item._id,
       feedback,
+      role: userRole.role,
     };
     axios.post("http://localhost:5000/feedback", feedbackInfo).then(() => {
       e.target.feedback.value = "";
@@ -233,13 +235,13 @@ const SurveyDetails = () => {
         </div>
       </div>
       <div className="text-center">
-        {
-          user && <Link to={`/showresponse/${item._id}`}>
-          <button className="bg-sky-400 text-white py-2 px-8 rounded-3xl hover:shadow-2xl hover:border-sky-800 border hover:bg-white hover:text-black">
-            Watch Responses
-          </button>
+        {user && (
+          <Link to={`/showresponse/${item._id}`}>
+            <button className="bg-sky-400 text-white py-2 px-8 rounded-3xl hover:shadow-2xl hover:border-sky-800 border hover:bg-white hover:text-black">
+              Watch Responses
+            </button>
           </Link>
-        }
+        )}
       </div>
       <div className="my-20 flex  max-w-[1400px] mx-auto">
         <div className="flex-1 space-y-3 border-e-2">

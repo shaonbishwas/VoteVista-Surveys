@@ -21,6 +21,8 @@ import SurveysResponse from "./Pages/SurveysResponse.jsx";
 import ShowResponse from "./Pages/ShowResponse.jsx";
 import MySurveys from "./Pages/MySurveys.jsx";
 import PrivateRoute from "./Routes/PrivateRoute.jsx";
+import DashboardHome from "./Pages/DashboardHome.jsx";
+import AdminSurveyResponce from "./Pages/AdminSurveyResponce.jsx";
 
 const router = createBrowserRouter([
   {
@@ -81,6 +83,14 @@ const router = createBrowserRouter([
     element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
     // errorElement: <ErrorElement></ErrorElement>,
     children: [
+      {
+        path: "/dashboard",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "adminsurveyresponce",
+        element: <AdminSurveyResponce></AdminSurveyResponce>,
+      },
       {
         path: "addsurvey",
         element: <AddSurvey></AddSurvey>,

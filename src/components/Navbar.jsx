@@ -43,7 +43,7 @@ const Navbar = () => {
       >
         Surveys
       </NavLink>
-      <NavLink
+      {/* <NavLink
         className={({ isActive, isPending }) =>
           isPending
             ? "pending"
@@ -54,7 +54,7 @@ const Navbar = () => {
         to="becomepro"
       >
         Become Pro
-      </NavLink>
+      </NavLink> */}
       <NavLink
         className={({ isActive, isPending }) =>
           isPending
@@ -79,18 +79,20 @@ const Navbar = () => {
       >
         About Us
       </NavLink>
-      <NavLink
-        className={({ isActive, isPending }) =>
-          isPending
-            ? "pending"
-            : isActive
-            ? "active lg:mt-2  text-[#ff5100] font-bold text-lg"
-            : "lg:mt-2 text-lg"
-        }
-        to="dashboard"
-      >
-        Dashboard
-      </NavLink>
+      {user && (
+        <NavLink
+          className={({ isActive, isPending }) =>
+            isPending
+              ? "pending"
+              : isActive
+              ? "active lg:mt-2  text-[#ff5100] font-bold text-lg"
+              : "lg:mt-2 text-lg"
+          }
+          to="dashboard"
+        >
+          Dashboard
+        </NavLink>
+      )}
 
       {user?.email ? (
         <NavLink className="lg:mt-2 text-lg" onClick={handleLogout}>

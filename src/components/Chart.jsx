@@ -1,6 +1,8 @@
 // import "./styles.css";
 import { PieChart, Pie, Cell, Legend } from "recharts";
 import PropTypes from "prop-types";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 const data = [
   { name: "Group A", value: 40 },
   { name: "Group B", value: 30 },
@@ -35,9 +37,16 @@ const renderCustomizedLabel = ({
     </text>
   );
 };
-export default function Chart({survey}) {
-  
-  console.log(survey)
+export default function Chart({surveyId}) {
+  const axiosPublic = useAxiosPublic()
+  const { data: votes = [] } = useQuery({
+    queryKey: ["voteamount"],
+    queryFn: async () => {
+      const result = await axiosPublic.get(`/voteamount/${surveyId}`);
+      return result.data;
+    },
+  });
+  console.log(votes)
   return (
     <PieChart width={400} height={400}>
       <Pie
@@ -59,5 +68,5 @@ export default function Chart({survey}) {
   );
 }
 Chart.propTypes = {
-  survey: PropTypes.object
+  surveyId: PropTypes.string
 };

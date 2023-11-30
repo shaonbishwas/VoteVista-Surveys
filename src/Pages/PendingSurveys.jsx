@@ -24,6 +24,7 @@ const PendingSurveys = () => {
       email: user.email,
       surveyId: id,
       feedback,
+      role:'admin'
     };
     axiosPublic.post("/feedback", feedbackInfo).then(() => {
       axiosPublic.post(`/survey/${id}`).then(() => {

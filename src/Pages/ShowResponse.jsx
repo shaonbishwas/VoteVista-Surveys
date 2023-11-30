@@ -18,7 +18,7 @@ const ShowResponse = () => {
   return (
     <div>
       <div className="flex items-center justify-center">
-        <Chart survey={data}></Chart>
+        <Chart surveyId={data._id}></Chart>
       </div>
       
       <div>
