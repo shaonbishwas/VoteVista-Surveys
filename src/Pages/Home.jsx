@@ -4,14 +4,21 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const { data } = useQuery({
+  const { data=[] } = useQuery({
     queryKey: ["featured surveys"],
+    queryFn: async () => {
+      const result = await axios.get(`http://localhost:5000/surveys?vote=dsc`);
+      return result.data;
+    },
+  });
+  const { data:latest =[] } = useQuery({
+    queryKey: ["latest surveys"],
     queryFn: async () => {
       const result = await axios.get("https://vote-viste-server-side.vercel.app/surveys");
       return result.data;
     },
   });
-  console.log(data);
+
   return (
     <div className="max-w-[1400px] mx-auto">
       {/* hero section */}
@@ -73,7 +80,7 @@ const Home = () => {
       <div className="my-20">
         <h1 className="text-4xl font-semibold my-8 ml-10">Latest Surveys</h1>
         <div className="grid grid-cols-3 gap-5">
-          {data?.slice(0, 6).map((item) => (
+          {latest?.slice(0, 6).map((item) => (
             <div
               key={item._id}
               className="card w-96 bg-base-100 shadow-xl image-full mx-auto h-64"

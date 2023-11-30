@@ -20,6 +20,7 @@ import SurveyDetails from "./Pages/SurveyDetails.jsx";
 import SurveysResponse from "./Pages/SurveysResponse.jsx";
 import ShowResponse from "./Pages/ShowResponse.jsx";
 import MySurveys from "./Pages/MySurveys.jsx";
+import PrivateRoute from "./Routes/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,11 @@ const router = createBrowserRouter([
         element: <SurveyDetails></SurveyDetails>,
         loader: ({params})=> fetch(`http://localhost:5000/surveys/${params.id}`)
         // errorElement: <ErrorElement></ErrorElement>,
+      },
+      {
+        path: "showresponse/:id",
+        element: <ShowResponse></ShowResponse>,
+        loader:({params})=> fetch(`http://localhost:5000/surveys/${params.id}`)
       }
     ],
   },
@@ -72,7 +78,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashBoard></DashBoard>,
+    element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
     // errorElement: <ErrorElement></ErrorElement>,
     children: [
       {
@@ -89,7 +95,7 @@ const router = createBrowserRouter([
       },
       {
         path: "surveyresponse",
-        element: <SurveysResponse></SurveysResponse>,
+        element: <PrivateRoute><SurveysResponse></SurveysResponse></PrivateRoute>,
       },
       {
         path: "mysurveys",

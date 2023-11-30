@@ -47,12 +47,18 @@ const MySurveys = () => {
                   </div>
                   <p>{item?.descriptio?.slice(0, 40)}..</p>
                   <p>Total Vote : {item.vote}</p>
-                  <div className="flex gap-5 md:w-1/2 py-2">
+                  <div className="flex gap-5  py-2">
                     <Link
-                      to={`/surveydetails/${item._id}`}
+                      // to={`/surveydetails/${item._id}`}
                       className="font-semibold text-green-500"
                     >
-                      VOTE NOW
+                      USERS FEEDBACK
+                    </Link>
+                    <Link
+                      // to={`/surveydetails/${item._id}`}
+                      className="font-semibold text-green-500"
+                    >
+                      ADMINS FEEDBACK
                     </Link>
                     {/* <button
                     className="font-semibold text-red-500"
@@ -101,20 +107,20 @@ const MySurveys = () => {
                   </div>
                   <p>{item?.descriptio?.slice(0, 40)}..</p>
                   <p>Total Vote : {item.vote}</p>
-                  <div className="flex gap-5 md:w-1/2 py-2">
+                  {/* <div className="flex gap-5 md:w-1/2 py-2">
                     <Link
                       to={`/surveydetails/${item._id}`}
                       className="font-semibold text-green-500"
                     >
                       VOTE NOW
                     </Link>
-                    {/* <button
+                    <button
                     className="font-semibold text-red-500"
                     //   onClick={handleDelete}
                   >
                     DELETE
-                  </button> */}
-                  </div>
+                  </button>
+                  </div> */}
                 </div>
               </div>
             ))}

@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import axios from "axios";
 import Option from "../components/Option";
 import { AiOutlineLike } from "react-icons/ai";
@@ -8,12 +8,13 @@ import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useState } from "react";
+import useLoadUser from "../hooks/useLoadUser";
 const SurveyDetails = () => {
-  
-  const axiosPublic = useAxiosPublic()
+  const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
+  const userRole = useLoadUser();
   const item = useLoaderData();
-  const [selected, setSelected] = useState(item?.options[0])
+  const [selected, setSelected] = useState(item?.options[0]);
   const { data: comments = [], refetch: commentRefetch } = useQuery({
     queryKey: ["comments"],
     queryFn: async () => {
@@ -33,26 +34,22 @@ const SurveyDetails = () => {
       return result.data;
     },
   });
-  const { data:totalLikes, refetch:likeRefetch } = useQuery({
+  const { data: totalLikes, refetch: likeRefetch } = useQuery({
     queryKey: ["alllikes"],
     queryFn: async () => {
-      const result = await axiosPublic.get(
-        `/likes/${item._id}`
-      );
+      const result = await axiosPublic.get(`/likes/${item._id}`);
       return result.data;
     },
   });
-  console.log(totalLikes)
-  const { data:totalDislike, refetch:dislikeRefetch } = useQuery({
+  console.log(totalLikes);
+  const { data: totalDislike, refetch: dislikeRefetch } = useQuery({
     queryKey: ["alldislike"],
     queryFn: async () => {
-      const result = await axiosPublic.get(
-        `/dislikes/${item._id}`
-      );
+      const result = await axiosPublic.get(`/dislikes/${item._id}`);
       return result.data;
     },
   });
-  console.log(totalDislike, 'dislike')
+  console.log(totalDislike, "dislike");
   //   console.log(feedbacks[0]?.feedback,'feedback')
   const handleSubmitFeedback = (e) => {
     e.preventDefault();
@@ -101,13 +98,13 @@ const SurveyDetails = () => {
     console.log("vote");
     const body = {
       email: user.email,
-      surveyId:item._id,
+      surveyId: item._id,
       vote: selected,
     };
     axios.post(`http://localhost:5000/vote/${item._id}`, body).then((res) => {
       // e.target.comment.value = "";
-      console.log(res?.data?.isVoted)
-      if(!res?.data?.isVoted){
+      console.log(res?.data?.isVoted);
+      if (!res?.data?.isVoted) {
         // setIsvoted(res.data.isVoted)
         Swal.fire({
           position: "top-end",
@@ -124,33 +121,35 @@ const SurveyDetails = () => {
     // console.log("like");
     const body = {
       email: user.email,
-      surveyId:item._id,
+      surveyId: item._id,
       like: 1,
     };
-    axios.post(`http://localhost:5000/like/${item._id}`, body).then((result) => {
-      // commentRefetch();
-      if(!result?.data?.isLiked){
-        likeRefetch()
-      }
-
-    });
+    axios
+      .post(`http://localhost:5000/like/${item._id}`, body)
+      .then((result) => {
+        // commentRefetch();
+        if (!result?.data?.isLiked) {
+          likeRefetch();
+        }
+      });
   };
   const handleDislike = () => {
     console.log("dislike");
     const body = {
       email: user.email,
-      surveyId:item._id,
+      surveyId: item._id,
       dislike: 1,
     };
-    axios.post(`http://localhost:5000/dislike/${item._id}`, body).then((result) => {
-      // commentRefetch();
-      if(!result?.data?.isDislike){
-        dislikeRefetch()
-      }
-
-    });
+    axios
+      .post(`http://localhost:5000/dislike/${item._id}`, body)
+      .then((result) => {
+        // commentRefetch();
+        if (!result?.data?.isDislike) {
+          dislikeRefetch();
+        }
+      });
   };
-  
+
   return (
     <>
       <div className="my-20 flex gap-10 max-w-[1400px] mx-auto">
@@ -163,30 +162,84 @@ const SurveyDetails = () => {
           <h2 className="text-3xl font-semibold text-gray-700">
             {item?.questionText}
           </h2>
-          <Option options={item?.options} selected={selected} setSelected={setSelected}></Option>
+          <Option
+            options={item?.options}
+            selected={selected}
+            setSelected={setSelected}
+          ></Option>
           <div className="flex">
-            <button className="rounded-s-3xl border-2 p-2 flex gap-2" onClick={handleLike}>
-              <AiOutlineLike className="text-2xl" />{totalLikes?.result}
-            </button>
-            <button className="rounded-e-3xl border-l-0 border-2 p-2 flex gap-2">
-              <BiDislike className="text-2xl" onClick={handleDislike} />{totalDislike?.result}
-            </button>
+            {user ? (
+              <>
+                <button
+                  className="rounded-s-3xl border-2 p-2 flex gap-2"
+                  onClick={handleLike}
+                >
+                  <AiOutlineLike className="text-2xl" />
+                  {totalLikes?.result}
+                </button>
+                <button className="rounded-e-3xl border-l-0 border-2 p-2 flex gap-2">
+                  <BiDislike className="text-2xl" onClick={handleDislike} />
+                  {totalDislike?.result}
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className="rounded-s-3xl border-2 p-2 flex gap-2"
+                  disabled
+                >
+                  <AiOutlineLike className="text-2xl" />
+                  {totalLikes?.result}
+                </button>
+                <button
+                  className="rounded-e-3xl border-l-0 border-2 p-2 flex gap-2"
+                  disabled
+                >
+                  <BiDislike className="text-2xl" />
+                  {totalDislike?.result}
+                </button>
+              </>
+            )}
           </div>
           <div className="flex gap-10 mt-5">
-            <button type="btn"
-              onClick={handleVote}
-              className={`bg-sky-800 text-white py-2 px-8 rounded-3xl hover:shadow-xl hover:border-sky-800 border hover:bg-white hover:text-black`}
-            >
-              Vote
-            </button>
-            <button
-              className="hover:bg-red-800 border border-red-800 hover:text-white py-2 px-8 rounded-3xl"
-              onClick={() => document.getElementById("my_modal_1").showModal()}
-            >
-              Report
-            </button>
+            {user ? (
+              <button
+                type="btn"
+                onClick={handleVote}
+                className={`bg-sky-800 text-white py-2 px-8 rounded-3xl hover:shadow-xl hover:border-sky-800 border hover:bg-white hover:text-black`}
+              >
+                Vote
+              </button>
+            ) : (
+              <button
+                type="btn"
+                disabled
+                className={`  py-2 px-8 rounded-3xl   border text-black`}
+              >
+                Vote
+              </button>
+            )}
+            {user && (
+              <button
+                className="hover:bg-red-800 border border-red-800 hover:text-white py-2 px-8 rounded-3xl"
+                onClick={() =>
+                  document.getElementById("my_modal_1").showModal()
+                }
+              >
+                Report
+              </button>
+            )}
           </div>
         </div>
+      </div>
+      <div className="text-center">
+        {
+          user && <Link to={`/showresponse/${item._id}`}>
+          <button className="bg-sky-400 text-white py-2 px-8 rounded-3xl hover:shadow-2xl hover:border-sky-800 border hover:bg-white hover:text-black">
+            Watch Responses
+          </button>
+          </Link>
+        }
       </div>
       <div className="my-20 flex  max-w-[1400px] mx-auto">
         <div className="flex-1 space-y-3 border-e-2">
@@ -202,7 +255,7 @@ const SurveyDetails = () => {
               <input
                 type="submit"
                 value="Send"
-                className="bg-sky-800 text-white py-2 px-8 rounded-e-3xl hover:shadow-xl hover:border-sky-800 border hover:bg-white hover:text-black"
+                className="bg-sky-800 cursor-pointer text-white py-2 px-8 rounded-e-3xl hover:shadow-xl hover:border-sky-800 border hover:bg-white hover:text-black"
               />
             </div>
           </form>
@@ -231,9 +284,11 @@ const SurveyDetails = () => {
                 className="border-2 py-2 px-4 rounded-s-3xl"
               />
               <input
+                disabled={userRole?.role === "pro-user" ? false : true}
                 type="submit"
                 value="Send"
-                className="bg-sky-800 text-white py-2 px-8 rounded-e-3xl hover:shadow-xl hover:border-sky-800 border hover:bg-white hover:text-black"
+                onClick={() => console.log("comment ")}
+                className="bg-sky-800 cursor-pointer text-white py-2 px-8 rounded-e-3xl hover:shadow-xl hover:border-sky-800 border hover:bg-white hover:text-black"
               />
             </div>
           </form>
@@ -251,13 +306,6 @@ const SurveyDetails = () => {
           </div>
         </div>
       </div>
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
-      {/* <button
-        className="btn"
-        
-      >
-        open modal
-      </button> */}
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box bg-white">
           <h3 className="font-bold text-2xl mb-5">Chose a Reason to Report</h3>

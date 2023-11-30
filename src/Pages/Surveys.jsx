@@ -46,6 +46,7 @@ const filterButton = ()=>{
               // refetch();
             }}
           >
+            <option value="">All</option>
             {titles?.map((d) => (
               <option key={d._id}>{d.title}</option>
             ))}
