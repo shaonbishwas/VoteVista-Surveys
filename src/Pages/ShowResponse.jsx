@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import Chart from "../components/Chart";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useLoaderData } from "react-router-dom";
+import useLoadUser from "../hooks/useLoadUser";
 
 const ShowResponse = () => {
   const data = useLoaderData();
   // console.log(data._id);
+  const user = useLoadUser()
   const axiosPublic = useAxiosPublic();
   const { data: votes = [] } = useQuery({
     queryKey: ["voteforsurvey"],
@@ -21,7 +23,8 @@ const ShowResponse = () => {
         <Chart surveyId={data._id}></Chart>
       </div>
       
-      <div>
+      {
+        user.role !== 'user' && <div>
         {votes.length === 0 ? (
           <h1 className="text-center my-10 text-2xl font-bold text-gray-400">
             Do not have any vote yet
@@ -56,6 +59,7 @@ const ShowResponse = () => {
           </div>
         )}
       </div>
+      }
     </div>
   );
 };

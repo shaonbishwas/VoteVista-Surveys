@@ -23,99 +23,132 @@ import MySurveys from "./Pages/MySurveys.jsx";
 import PrivateRoute from "./Routes/PrivateRoute.jsx";
 import DashboardHome from "./Pages/DashboardHome.jsx";
 import AdminSurveyResponce from "./Pages/AdminSurveyResponce.jsx";
+import ErrorElement from "./Pages/ErrorElement.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
-    // errorElement: <ErrorElement></ErrorElement>,
+    errorElement: <ErrorElement></ErrorElement>,
     children: [
       {
         path: "/",
         element: <Home></Home>,
-        // errorElement: <ErrorElement></ErrorElement>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "becomepro",
         element: <BecomePro></BecomePro>,
-        // errorElement: <ErrorElement></ErrorElement>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "contactus",
         element: <ContactUs />,
-        // errorElement: <ErrorElement></ErrorElement>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "aboutus",
         element: <AboutUs />,
-        // errorElement: <ErrorElement></ErrorElement>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "surveys",
         element: <Surveys></Surveys>,
-        // errorElement: <ErrorElement></ErrorElement>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "surveydetails/:id",
         element: <SurveyDetails></SurveyDetails>,
-        loader: ({params})=> fetch(`http://localhost:5000/surveys/${params.id}`)
-        // errorElement: <ErrorElement></ErrorElement>,
+        loader: ({ params }) =>
+          fetch(
+            `https://vote-viste-server-side.vercel.app/surveys/${params.id}`
+          ),
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "showresponse/:id",
         element: <ShowResponse></ShowResponse>,
-        loader:({params})=> fetch(`http://localhost:5000/surveys/${params.id}`)
-      }
+        loader: ({ params }) =>
+          fetch(
+            `https://vote-viste-server-side.vercel.app/surveys/${params.id}`
+          ),
+      },
     ],
   },
   {
     path: "/login",
     element: <Login></Login>,
-    // errorElement: <ErrorElement></ErrorElement>,
+    errorElement: <ErrorElement></ErrorElement>,
   },
   {
     path: "/register",
     element: <Register></Register>,
-    // errorElement: <ErrorElement></ErrorElement>,
+    errorElement: <ErrorElement></ErrorElement>,
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
-    // errorElement: <ErrorElement></ErrorElement>,
+    element: (
+      <PrivateRoute>
+        <DashBoard></DashBoard>
+      </PrivateRoute>
+    ),
+    errorElement: <ErrorElement></ErrorElement>,
     children: [
       {
         path: "/dashboard",
         element: <DashboardHome></DashboardHome>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "adminsurveyresponce",
-        element: <AdminSurveyResponce></AdminSurveyResponce>,
+        element: <PrivateRoute>
+          <AdminSurveyResponce></AdminSurveyResponce>,
+          </PrivateRoute>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "addsurvey",
         element: <AddSurvey></AddSurvey>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "manageusers",
         element: <ManageUsers></ManageUsers>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "pendingsurveys",
-        element: <PendingSurveys></PendingSurveys>,
+        element: <PrivateRoute>
+          <PendingSurveys></PendingSurveys>
+        </PrivateRoute>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "surveyresponse",
-        element: <PrivateRoute><SurveysResponse></SurveysResponse></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <SurveysResponse></SurveysResponse>
+          </PrivateRoute>
+        ),
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "mysurveys",
-        element: <MySurveys></MySurveys>,
+        element: <PrivateRoute>
+          <MySurveys></MySurveys>
+        </PrivateRoute>,
+        errorElement: <ErrorElement></ErrorElement>,
       },
       {
         path: "showresponse/:id",
-        element: <ShowResponse></ShowResponse>,
-        loader:({params})=> fetch(`http://localhost:5000/surveys/${params.id}`)
-      }
+        element: <PrivateRoute>
+          <ShowResponse></ShowResponse>
+        </PrivateRoute>,
+        loader: ({ params }) =>
+          fetch(
+            `https://vote-viste-server-side.vercel.app/surveys/${params.id}`
+          ),
+      },
     ],
   },
 ]);

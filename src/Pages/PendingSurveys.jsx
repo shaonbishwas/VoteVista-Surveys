@@ -9,7 +9,7 @@ const PendingSurveys = () => {
     queryKey: ["pending surveys"],
     queryFn: async () => {
       const result = await axiosPublic.get(
-        "http://localhost:5000/pendingsurveys"
+        "https://vote-viste-server-side.vercel.app/pendingsurveys"
       );
       return result.data;
     },
@@ -24,7 +24,7 @@ const PendingSurveys = () => {
       email: user.email,
       surveyId: id,
       feedback,
-      role:'admin'
+      role: "admin",
     };
     axiosPublic.post("/feedback", feedbackInfo).then(() => {
       axiosPublic.post(`/survey/${id}`).then(() => {
@@ -37,7 +37,9 @@ const PendingSurveys = () => {
   // };
   return (
     <div>
-      <h1 className="text-3xl font-bold mt-10 text-center border-b-2 pb-5 mx-5">Pending Surveys</h1>
+      <h1 className="text-3xl font-bold mt-10 text-center border-b-2 pb-5 mx-5">
+        Pending Surveys
+      </h1>
       <div>
         <div className="grid grid-cols-3 mx-5">
           {data?.map((pendingSurveys) => (

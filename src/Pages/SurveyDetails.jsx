@@ -19,7 +19,7 @@ const SurveyDetails = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const result = await axios.get(
-        `http://localhost:5000/comments/${item._id}`
+        `https://vote-viste-server-side.vercel.app/comments/${item?._id}`
       );
       return result.data;
     },
@@ -29,7 +29,7 @@ const SurveyDetails = () => {
     queryKey: ["feedback"],
     queryFn: async () => {
       const result = await axios.get(
-        `http://localhost:5000/feedbacks/${item._id}`
+        `https://vote-viste-server-side.vercel.app/feedbacks/${item._id}`
       );
       return result.data;
     },
@@ -61,17 +61,19 @@ const SurveyDetails = () => {
       feedback,
       role: userRole.role,
     };
-    axios.post("http://localhost:5000/feedback", feedbackInfo).then(() => {
-      e.target.feedback.value = "";
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "your feedback Successfully submitted",
-        showConfirmButton: false,
-        timer: 1500,
+    axios
+      .post("https://vote-viste-server-side.vercel.app/feedback", feedbackInfo)
+      .then(() => {
+        e.target.feedback.value = "";
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "your feedback Successfully submitted",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        feedbackRefetch();
       });
-      feedbackRefetch();
-    });
   };
   const handleSubmitComment = (e) => {
     e.preventDefault();
@@ -81,17 +83,19 @@ const SurveyDetails = () => {
       surveyId: item._id,
       comment,
     };
-    axios.post("http://localhost:5000/comments", commentInfo).then(() => {
-      e.target.comment.value = "";
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "your comment Successfully submitted",
-        showConfirmButton: false,
-        timer: 1500,
+    axios
+      .post("https://vote-viste-server-side.vercel.app/comments", commentInfo)
+      .then(() => {
+        e.target.comment.value = "";
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "your comment Successfully submitted",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        commentRefetch();
       });
-      commentRefetch();
-    });
     console.log(commentInfo);
     // console.log(user)
   };
@@ -103,21 +107,23 @@ const SurveyDetails = () => {
       surveyId: item._id,
       vote: selected,
     };
-    axios.post(`http://localhost:5000/vote/${item._id}`, body).then((res) => {
-      // e.target.comment.value = "";
-      console.log(res?.data?.isVoted);
-      if (!res?.data?.isVoted) {
-        // setIsvoted(res.data.isVoted)
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "your Vote Successfully submitted",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-      // commentRefetch();
-    });
+    axios
+      .post(`https://vote-viste-server-side.vercel.app/vote/${item._id}`, body)
+      .then((res) => {
+        // e.target.comment.value = "";
+        console.log(res?.data?.isVoted);
+        if (!res?.data?.isVoted) {
+          // setIsvoted(res.data.isVoted)
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "your Vote Successfully submitted",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        // commentRefetch();
+      });
   };
   const handleLike = () => {
     // console.log("like");
@@ -127,7 +133,7 @@ const SurveyDetails = () => {
       like: 1,
     };
     axios
-      .post(`http://localhost:5000/like/${item._id}`, body)
+      .post(`https://vote-viste-server-side.vercel.app/like/${item._id}`, body)
       .then((result) => {
         // commentRefetch();
         if (!result?.data?.isLiked) {
@@ -143,7 +149,10 @@ const SurveyDetails = () => {
       dislike: 1,
     };
     axios
-      .post(`http://localhost:5000/dislike/${item._id}`, body)
+      .post(
+        `https://vote-viste-server-side.vercel.app/dislike/${item._id}`,
+        body
+      )
       .then((result) => {
         // commentRefetch();
         if (!result?.data?.isDislike) {
@@ -286,7 +295,7 @@ const SurveyDetails = () => {
                 className="border-2 py-2 px-4 rounded-s-3xl"
               />
               <input
-                disabled={userRole?.role === "pro-user" ? false : true}
+                disabled={user?.email ? false : true}
                 type="submit"
                 value="Send"
                 onClick={() => console.log("comment ")}

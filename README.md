@@ -1,8 +1,13 @@
-# React + Vite
+# Vote Vista
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Live Site Link
 
-Currently, two official plugins are available:
+- [https://votevista.web.app/]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Some Features
+
+- you can add a survey and will get responses from other users
+- you can vote, like, dislike and report in others surveys
+- you can buy a subscription and become a pro user then you can comment in surveys
+- you can see survey results in charts
+- if you become admin you can see the payments from the users

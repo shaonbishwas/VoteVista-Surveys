@@ -4,17 +4,21 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const { data=[] } = useQuery({
+  const { data = [] } = useQuery({
     queryKey: ["featured surveys"],
     queryFn: async () => {
-      const result = await axios.get(`http://localhost:5000/surveys?vote=dsc`);
+      const result = await axios.get(
+        `https://vote-viste-server-side.vercel.app/surveys?vote=dsc`
+      );
       return result.data;
     },
   });
-  const { data:latest =[] } = useQuery({
+  const { data: latest = [] } = useQuery({
     queryKey: ["latest surveys"],
     queryFn: async () => {
-      const result = await axios.get("https://vote-viste-server-side.vercel.app/surveys");
+      const result = await axios.get(
+        "https://vote-viste-server-side.vercel.app/surveys"
+      );
       return result.data;
     },
   });
@@ -61,8 +65,12 @@ const Home = () => {
                 />
               </figure>
               <div className="card-body  text-white bg-[#00000030] rounded-2xl">
-                <h2 className="card-title text-3xl font-bold text-gray-800 ">{item.title}</h2>
-                <p className="text-lg font-semibold text-gray-800">{item.description}</p>
+                <h2 className="card-title text-3xl font-bold text-gray-800 ">
+                  {item.title}
+                </h2>
+                <p className="text-lg font-semibold text-gray-800">
+                  {item.description}
+                </p>
                 <div className="card-actions justify-end">
                   <Link to={`/surveydetails/${item._id}`}>
                     <button className="bg-white py-2 px-4 text-[#ff5100] rounded-full hover:bg-transparent hover:border-2 hover:border-black shadow-lg">
@@ -93,8 +101,12 @@ const Home = () => {
                 />
               </figure>
               <div className="card-body  text-white bg-[#00000030] rounded-2xl ">
-                <h2 className="card-title text-3xl text-gray-800 font-bold">{item.title}</h2>
-                <p className="text-lg font-semibold text-gray-800">{item.description}</p>
+                <h2 className="card-title text-3xl text-gray-800 font-bold">
+                  {item.title}
+                </h2>
+                <p className="text-lg font-semibold text-gray-800">
+                  {item.description}
+                </p>
                 <div className="card-actions justify-end">
                   <Link to={`/surveydetails/${item._id}`}>
                     <button className="bg-white py-2 px-4 text-[#ff5100] rounded-full hover:bg-transparent hover:border-2 hover:border-black shadow-lg">
